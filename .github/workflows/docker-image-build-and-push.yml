@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build -t my-script:latest .
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/my-script:latest .
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
