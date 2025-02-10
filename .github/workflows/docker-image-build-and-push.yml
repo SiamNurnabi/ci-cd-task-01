@@ -1,0 +1,28 @@
+name: Build and push docker image 
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build -t my-script:latest .
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+          image : siamnurnabi/ci-cd-task-01
+          registry : docker.io
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push Docker Image to Docker Hub
+      run: docker push my-script:latest
